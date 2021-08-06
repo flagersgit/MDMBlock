@@ -46,11 +46,11 @@ struct MDMBlockPolicy {
 
 		if (err == 0) {
 			// Uncomment for more verbose output.
-			DBGLOG_COND(verboseProcessLogging, "rev", "got request %s", pathbuf);
+			DBGLOG_COND(verboseProcessLogging, "mdmb", "got request %s", pathbuf);
 
 			for (auto &proc : procBlacklist) {
 				if (strcmp(pathbuf, proc) == 0) {
-					DBGLOG("rev", "restricting process %s", pathbuf);
+					DBGLOG("mdmb", "restricting process %s", pathbuf);
 					return EPERM;
 				}
 			}
@@ -63,7 +63,7 @@ struct MDMBlockPolicy {
 	 *  Default dummy BSD init policy
 	 */
 	static void policyInitBSD(mac_policy_conf *conf) {
-		DBGLOG("rev", "init bsd policy on %u", getKernelVersion());
+		DBGLOG("mdmb", "init bsd policy on %u", getKernelVersion());
 	}
 
 	/**
@@ -109,7 +109,7 @@ PluginConfiguration ADDPR(config) {
 	KernelVersion::MountainLion,
 	KernelVersion::Monterey,
 	[]() {
-		DBGLOG("rev", "restriction policy plugin loaded");
+		DBGLOG("mdmb", "restriction policy plugin loaded");
 		verboseProcessLogging = checkKernelArgument("-mdmbproc");
 		mdmBlockPolicy.policy.registerPolicy();
 	}
